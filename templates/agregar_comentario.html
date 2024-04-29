@@ -1,0 +1,13 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% block contenido %}
+
+<div>
+<h4>Agregar un comentario</h4>
+    <form action="" method="post">{% csrf_token %}
+        {{form|crispy}}
+        <button class="btn btn-success ml-2" type="submit">Guardar</button><!--con esto ya añadimos a detalle articculo lo de agregar comentario -->
+    </form>
+</div>
+    <h4>Comentarios</h4>
+{% endblock contenido %}

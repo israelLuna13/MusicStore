@@ -1,0 +1,27 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load socialaccount %}
+
+{% block contenido %}
+{% providers_media_js %}
+
+  
+
+
+  <div class="login-container">
+    {% if user.is_authenticated %}
+    <div class="welcome-message">
+      <p>¡Bienvenido, {{ user.username }} 😃!</p>
+      <nav></nav>
+    </div>
+    {% else %}
+
+    <h2>Iniciar sesión con Google</h2>
+    <a href="{% provider_login_url 'google' %}" class="google-btn">
+      <img src="{% static 'google.png' %}" alt="Google Icon">
+      Iniciar sesión con Google
+    </a>
+
+    {% endif %}
+  </div>
+{% endblock contenido %}

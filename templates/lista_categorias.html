@@ -1,0 +1,34 @@
+<!-- templates/lista_categorias.html -->
+{% extends '_base.html' %}
+{% load static %}
+
+{% block titulo %}Categorías{% endblock titulo %}
+
+{% block contenido %}
+
+<div class="container-fluid" style="background-image: url(https://store.askingalexandria.com/cdn/shop/files/DESKTOP-HERO-02.jpg?v=1689360711&width=1500); background-size: cover; background-position: center; background-repeat: no-repeat; height: 50vh; position: relative;">
+    <!-- Contenido adicional se puede agregar encima de la imagen -->
+    <div class="text-center" style="position: absolute; top: 30%; left: 50%; transform: translate(-50%, -50%);">
+        <h1>!Categorias!</h1>
+        <p></p>  <ul>
+ {% for categoria in categorias %}
+    {% if categoria %}
+        <li>
+          <a class="btn btn-outline-dark bg-success" href="{% url 'lista_articulos_por_categoria' categoria=categoria %}">{{ categoria }}</a>
+        </li>
+    {% endif %}
+{% endfor %} 
+
+
+{% comment %} {% for artista in artistas %}
+    {% if artista %}
+        <li>
+          <a class="btn btn-outline-dark bg-success" href="{% url 'lista_articulos_artista' artista=artista %}">{{ artista }}</a>
+        </li>
+    {% endif %}
+{% endfor %}  {% endcomment %}
+
+  </ul>
+    </div>
+</div>
+{% endblock contenido %}

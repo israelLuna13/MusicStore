@@ -1,0 +1,35 @@
+<!-- templates/lista_articulos_por_categoria.html admin -->
+{% extends "_base.html" %}
+
+{% load static %}
+
+{% block titulo %}Articulos por Categoría{% endblock titulo %}
+
+{% block contenido %}
+
+<h2></h2>
+<div class="row">
+    {% for articulo in articulo_list %}
+        <div class="col-md-3">
+            <div class="card mb-3 bg-dark" >
+                <div class="card-header">
+                    <h1 class="font-weight-bold text-light text-truncate">
+                        <a href="{% url 'detalle_articulo' articulo.pk %}" class="navbar-brand" class="text-light">
+                            {{ articulo.titulo }}
+                        </a>
+                    </h1>
+                    <h6 class="text-muted" class="text-light"><p class="text-light" text-align="center">{{ articulo.categoria }} | {{ articulo.genero }} | {{ articulo.fecha }}</p></h6>
+                </div>
+                <div class="card-body">
+                    {% if articulo.imagen %}
+                        <div style="text-align: center;" class="text-light">
+                            <a href="{% url 'detalle_articulo' articulo.pk %}"> <img src="{{ articulo.imagen.url }}" alt="image" style="width: 300px; height: auto;"> </a>
+                        </div>
+                    {% endif %}
+                    <p text-align="center" class="text-light"> {{articulo.costo}}$</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+{% endblock contenido %}

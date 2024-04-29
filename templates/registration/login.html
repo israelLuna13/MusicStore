@@ -1,0 +1,49 @@
+<!--plantillas/registration/login-->
+{% extends '_base.html' %}
+{% load static %}
+{% comment %} {% providers_media_js %} marca error{% endcomment %}
+{% load crispy_forms_tags%}
+{% load socialaccount %}
+
+
+{% block titulo  %}  - Acceso {% endblock titulo %}
+
+{% block contenido %}
+
+<h2>Acceso</h2>
+<form action="" method="post" style="padding-bottom: 20pt;">{% csrf_token %}
+
+    {{form|crispy}}
+    <button type="submit" class="btn btn-success ml-2">Entrar (Iniciar sesion)</button>
+</form>
+<p>
+  <a href="{% url 'password_reset' %}" class="btn btn-link text-success font-weight-bold">Olvidó su contraseña</a>
+
+  <a href="{% url 'signup' %}" class="btn btn-link text-success font-weight-bold">Registrarse</a>
+  
+</p>
+
+<div class="login-container">
+    {% if user.is_authenticated %}
+    <div class="welcome-message">
+      <p>¡Bienvenido, {{ user.username }} 😃!</p>
+      <nav></nav>
+    </div>
+    {% else %}
+
+    <h2>Iniciar sesión con Google</h2>
+    <a href="{% provider_login_url 'google' %}" class="google-btn">
+      <img src="{% static 'google.png' %}" alt="Google Icon">
+      Iniciar sesión con Google
+    </a>
+
+    {% endif %}
+  </div>
+{% endblock contenido %}
+
+
+<!--
+
+  israel2
+    contrasena 1234Luna@
+-->

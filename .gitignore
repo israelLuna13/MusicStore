@@ -1,0 +1,36 @@
+# Entornos Virtuales
+.venv/
+
+# Archivos de macOS
+.DS_Store
+
+# Archivos y directorios específicos de Django
+*.pyc
+*.pyo
+__pycache__/
+db.sqlite3
+#media/
+#static/
+
+# Archivos de Docker
+#Dockerfile
+#docker-compose.yml
+
+# Carpeta de medios (puede ser personalizada según tus necesidades)
+#media/
+
+# Archivos de contraseñas o secretos (puede variar según tu configuración)
+#pass/
+
+# Otros directorios específicos de tu proyecto
+# articulos/
+# cuentas/
+# paginas/
+# proyecto/
+
+# Otros archivos específicos de tu proyecto
+manage.py
+# requerimientos.txt
+
+# Carpeta de plantillas (puede variar según tu configuración)
+#templates/

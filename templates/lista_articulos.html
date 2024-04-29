@@ -1,0 +1,35 @@
+<!-- articulos/lista_articulos -->
+{% extends "_base.html" %}
+
+{% load static %}
+{% block titulo %}Articulos{% endblock titulo %}
+{% block contenido %}
+{% comment %} <h1><p text-align="center">Articulos</p></h1> {% endcomment %}
+<hr>
+{% comment %} <h2>Bienvenido{{user.username}}</h2> {% endcomment %}
+    <div class="row">
+        {% for articulo in articulo_list %}
+            <div class="col-md-3"  >
+                <div class="card mb-3 bg-dark text-light">
+                    <div class="card-header text-light">
+                        <h2 class="font-weight-bold link-white text-light text-truncate">
+                            <a href="{% url 'detalle_articulo' pk=articulo.id %}"  class="navbar-brand">
+                                {{ articulo.titulo }}
+                            </a>
+                        </h2>
+                        <h6 class="text-muted"><p class="text-light"text-align="center">{{ articulo.categoria }} | {{ articulo.genero }} | {{ articulo.fecha_creacion }}</p></h6>
+                    </div>
+                    <div class="card-body">
+                    {% if articulo.imagen %}
+                        <div style="text-align: center;" >
+                         <a  class="text-light" href="{% url 'detalle_articulo' articulo.pk %}"> <img src="{{ articulo.imagen.url }}" alt="image" style="width: 300px; height: auto;"> </a>
+                        </div>
+                     {% endif %}
+                       <p text-align="center" class="text-light" > {{ articulo.costo }}</p>
+                    </div>
+              
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock contenido %}

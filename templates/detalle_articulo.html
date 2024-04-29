@@ -1,0 +1,121 @@
+<!--templates/detalle_articulo.html-->
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% block titulo %} {{ object.titulo }} {% endblock titulo %}
+{% block contenido %}
+
+<div class="article-entry">
+    <h2>{{object.artista}}</h2>
+    <h2>{{object.titulo}}</h2>
+   <h2><div> <a class="btn btn-outline-danger" href="{% url 'lista_articulos_por_genero' genero=object.genero %}">{{object.genero}}</a> 
+   {% comment %} <h2><div> <a class="btn btn-outline-danger" href="{% url 'lista_articulos_artista' artista=object.artista %}">{{object.artista}}</a>  {% endcomment %}
+
+    {% if object.categoria %}
+  <a class="btn btn-outline-danger"  href="{% url 'lista_articulos_por_categoria' categoria=object.categoria%}">{{object.categoria}}</a>
+   </div> </h2>
+   {% endif %}
+   
+   {% if object.imagen %}
+   <div style="text-align: center;">
+       <img src="{{ object.imagen.url }}" alt="image" style="width: 300px; height: auto;">
+   </div>
+   
+   {% endif %}
+
+
+   <p text-align="center" class="text-light"><h2>{{object.costo}}$</h2></p>
+   <hr>
+   <p style="text-align: center; font-size: 16px;" class="text-light">{{ object.cuerpo }}</p>
+
+  
+   <hr>
+    {% comment %} <p style="text-align: center; font-size: 16px;" >{{object.fecha}}</p> {% endcomment %}
+    <p style="text-align: center; font-size: 16px;" >Lanzamiento : {{object.fecha_creacion}}</p>
+
+
+    <div class="article-entry">
+        <h4>Tracklist del album</h4>
+        <div class="login-container ">
+            <div class="welcome-message bg-dark text-dark">
+              <p style="text-align: center; font-size: 16px;">{{object.tracklist}}
+    
+              </p>
+              <nav></nav>
+            </div>
+            
+    
+          </div>
+       
+    </div>
+    
+
+    <p text-align="center" > <a href="{% url 'lista_articulos' %}" class="btn btn-outline-white">Volver</a>
+     {% if user.is_staff %} 
+    <a href="{% url 'editar_articulo' object.pk %}" class="btn btn-outline-white btn-primary">Editar</a>
+    <a href="{% url 'eliminar_articulo' object.pk %}" class="btn btn-outline-white btn-danger">Eliminar</a> </p>
+     {% endif %}</p>
+</div>
+
+
+{% if user.is_authenticated or user.socialaccount_set.all %}
+<div class="login-container ">
+
+
+   <!--{{ paypal.render }}-->
+    <!-- Set up a container element for the button -->
+    <div id="paypal-button-container"></div>
+
+    <!-- Include the PayPal JavaScript SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=AQUIVAELNUMERODECEUNTADEPAYPALSANDBOX&currency=MXN"></script>
+    <script>
+        // Render the PayPal button into #paypal-button-container
+        paypal.Buttons({
+
+            // Call your server to set up the transaction
+            createOrder: function(data, actions) {
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            
+                            value: {{object.costo}},
+                            
+                        }
+                    }]
+                });
+            },
+
+            // Call your server to finalize the transaction
+            onApprove: function(data, actions) {
+                return actions.order.capture().then(function(details) {
+
+                    alert('transaction completed by ' + details.payer.name.given_name);
+                });
+            }
+
+        }).render('#paypal-button-container');
+    </script>
+</div>
+{% endif %}
+
+{% if user.is_authenticated %}
+<div>
+<hr>
+    <h4>Agregar un comentario</h4>
+    <form method="post">
+        
+        {% csrf_token %}
+        {{ form|crispy }}       
+    <hr>
+        <button class="btn btn-success ml-2" type="submit">Guardar</button><!--con esto ya añadimos a detalle articulo lo de agregar comentario -->
+    </form>
+
+
+    <h4 > <p text-algin="center">Comentarios</p></h4>
+</div>
+{% endif %}
+
+
+    {% for comentario in object.comentario_set.all %}
+    <p style="text-align: center; font-size: 16px;">{{ comentario.autor }} &middot; {{ comentario }}</p>
+    {% endfor %}
+{% endblock contenido %}
